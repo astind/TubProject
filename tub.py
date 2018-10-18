@@ -88,19 +88,20 @@ def gibbs_sampler(dna, k, t, n):
 def repeat_gibbs_sampler(dna, k, t, n):
     best_motifs = random_motif(dna, k)
     best_score = score_motifs(best_motifs)
-    for i in range(0,2000):
+    for i in range(0, 2000):
         motifs, score = gibbs_sampler(dna, k, t, n)
         if score < best_score:
             best_motifs = motifs
             best_score = score
-    return best_motifs
+    return best_motifs, best_score
 
 
-def print_ouput(best_ans):
+def print_output(best_ans, best_scr):
     out_string = ""
     for ans in best_ans:
         print(ans)
         out_string += ans + '\n'
+    out_string += str(best_scr)
     out_string = out_string.strip()
     out_file = open("output.txt", "w")
     out_file.write(out_string)
@@ -122,6 +123,7 @@ def get_data(filename):
 
 dna, k, t, n = get_data("upstream250.txt")
 
-answer = repeat_gibbs_sampler(dna, k, t, n)
-print_ouput(answer)
+answer, score = repeat_gibbs_sampler(dna, k, t, n)
+print(score)
+print_output(answer, score)
 
