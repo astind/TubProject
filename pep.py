@@ -2,6 +2,7 @@ import random
 import pandas
 import numpy as np
 
+
 def index_to_nucleotide(i):
     return "ACGT"[i]
 
@@ -96,18 +97,6 @@ def repeat_gibbs_sampler(dna, k, t, n):
     return best_motifs, best_score
 
 
-def get_data_random(filename):
-    df = pandas.read_csv(filename)
-    df2 = df.set_index("CLASS")
-    data = df2.loc["toxic", "DNASEQ"]
-    # grab some random samples
-    sample = random.sample(range(len(data)), 400)
-    dna = []
-    for rand in sample:
-        dna.append(data.iloc[rand])
-    return dna
-
-
 def consensus(motifs):
     consensus_string = ""
     counts = get_motif_counts(motifs, False)
@@ -116,7 +105,15 @@ def consensus(motifs):
     return consensus_string
 
 
-dna = get_data_random('peptidesWithDNA.csv')
+def get_data(filename):
+    with open(filename) as file:
+        dna = []
+        for line in file:
+            dna.append(line.strip())
+    return dna
+
+
+dna = get_data('randomData.txt')
 
 ans, score = repeat_gibbs_sampler(dna, 7, len(dna), 200)
 motif = consensus(ans)
