@@ -96,12 +96,13 @@ def repeat_gibbs_sampler(dna, k, t, n):
     return best_motifs, best_score
 
 
-def print_output(best_ans, best_scr):
+def print_output(best_ans, best_scr, consensus):
     out_string = ""
     for ans in best_ans:
         print(ans)
         out_string += ans + '\n'
-    out_string += str(best_scr)
+    out_string += str(best_scr) + " "
+    out_string += consensus
     out_string = out_string.strip()
     out_file = open("output.txt", "w")
     out_file.write(out_string)
@@ -121,9 +122,19 @@ def get_data(filename):
     return dna, k, t, n
 
 
+def consensus(motifs):
+    consensus_string = ""
+    counts = get_motif_counts(motifs, False)
+    for count in counts:
+        consensus_string += index_to_nucleotide(np.argmax(count))
+    return consensus_string
+
+
 dna, k, t, n = get_data("upstream250.txt")
 
 answer, score = repeat_gibbs_sampler(dna, k, t, n)
+hidden_motif = consensus(answer)
+print(hidden_motif)
 print(score)
-print_output(answer, score)
+print_output(answer, score, hidden_motif)
 
