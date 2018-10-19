@@ -104,7 +104,7 @@ def print_output(best_ans, best_scr, consensus):
     out_string += str(best_scr) + " "
     out_string += consensus
     out_string = out_string.strip()
-    out_file = open("output.txt", "w")
+    out_file = open("TubOutput.txt", "w")
     out_file.write(out_string)
     out_file.close()
 
