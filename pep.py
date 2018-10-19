@@ -115,7 +115,7 @@ def get_data(filename):
 
 dna = get_data('randomData.txt')
 
-ans, score = repeat_gibbs_sampler(dna, 7, len(dna), 200)
+ans, score = repeat_gibbs_sampler(dna, 20, len(dna), 200)
 motif = consensus(ans)
 print(motif)
 print(score)

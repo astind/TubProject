@@ -1,0 +1,5 @@
+7-mer: TTTCTTT
+Score: 1360.0
+
+20-merL TTTCTTTTTCTTTTTCTTTT
+Score: 3860.0
